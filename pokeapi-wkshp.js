@@ -26,7 +26,7 @@ const pokeAddListeners = () => {
   allAs.forEach((pokeEl) => {
     pokeEl.addEventListener(`click`, async (e) => {
       e.preventDefault();
-      const pokeName = e.target.innerText;
+      const pokeName = e.target.dataset.pokeurl;
       const pokeData = await getSinglePoke(pokeName);
       renderSinglePoke(pokeData);
     });
@@ -36,8 +36,8 @@ const pokeAddListeners = () => {
 init();
 
 //
-const getSinglePoke = async (pokeName) => {
-  const res = await fetch(url + pokeName);
+const getSinglePoke = async (pokeURL) => {
+  const res = await fetch(pokeURL);
   const data = await res.json();
   return data;
 };
@@ -47,5 +47,3 @@ const renderSinglePoke = (pokeData) => {
   pre.innerText = JSON.stringify(pokeData, null, 2);
   document.querySelector(`h1`).innerText = pokeData.name;
 };
-
-getSinglePoke(`pikachu`);

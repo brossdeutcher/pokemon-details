@@ -7,12 +7,21 @@ const getPokeList = async () => {
 };
 
 const renderPokeList = (pokeArr) => {
-  const ul = document.querySelector(`ul`);
+  const main = document.querySelector(`main`);
+  main.innerHTML = ``;
+
+  const h1 = document.createElement(`h1`);
+  h1.innerHTML = `Pok&egrave;dex`;
+  main.appendChild(h1);
+
+  const ul = document.createElement(`ul`);
   const pokeNames = pokeArr
     .map((singlePoke) => {
       return `<li><a href="" data-pokeurl="${url}${singlePoke.name}">${singlePoke.name}</a></li>`;
-    }).join(``);
+    })
+    .join(``);
   ul.innerHTML = pokeNames;
+  main.appendChild(ul);
 };
 
 const init = async () => {
@@ -43,7 +52,24 @@ const getSinglePoke = async (pokeURL) => {
 };
 
 const renderSinglePoke = (pokeData) => {
-  const pre = document.querySelector(`pre`);
+  const main = document.querySelector(`main`);
+  main.innerHTML = ``;
+
+  const h1 = document.createElement(`h1`);
+  h1.innerText = pokeData.name;
+  main.appendChild(h1);
+
+  const img = document.createElement(`img`);
+  img.setAttribute(`src`, pokeData.sprites.front_default);
+  img.setAttribute(`alt`, `Poke Image not Found`);
+  main.appendChild(img);
+
+  const button = document.createElement(`button`);
+  button.addEventListener(`click`, init);
+  button.innerText = `Back to Pokedex`;
+  main.appendChild(button);
+
+  const pre = document.createElement(`pre`);
   pre.innerText = JSON.stringify(pokeData, null, 2);
-  document.querySelector(`h1`).innerText = pokeData.name;
+  main.appendChild(pre);
 };
